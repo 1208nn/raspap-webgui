@@ -718,9 +718,8 @@ function setTheme()
 {
     $mode = getThemeMode();
     if ($mode === 'system') {
-        // For system mode, we won't set data-bs-theme here
-        // JavaScript will handle it based on prefers-color-scheme
-        echo '';
+        // For system mode, JavaScript will handle it based on prefers-color-scheme
+        return;
     } elseif ($mode === 'dark' || getNightmode()) {
         echo 'data-bs-theme="dark"';
     } else {

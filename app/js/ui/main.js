@@ -598,7 +598,7 @@ function applyTheme(mode) {
     // Also update the CSS theme file
     var currentCssTheme = getCookie('theme');
     if (effectiveTheme === 'dark') {
-        if (currentCssTheme === 'custom.php' || !currentCssTheme) {
+        if (currentCssTheme === 'custom.php' || currentCssTheme === null) {
             set_theme('dark.css');
         }
     } else {
