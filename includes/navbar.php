@@ -5,11 +5,12 @@
   <button class="btn btn-link btn-sm order-1 order-lg-0 me-auto p-3 bd-highlight" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
   <!-- Navbar-->
   <ul class="navbar-nav ms-auto ms-md-0 me-2 me-lg-4">
-    <!-- Display mode -->
-    <div class="form-check form-switch p-4 mt-1">
-      <input type="checkbox" class="form-check-input" id="night-mode" <?php echo getNightmode() ? 'checked' : null ; ?> >
-      <label class="form-check-label" for="night-mode"><i class="far fa-moon mr-1 text-muted"></i></label>
-    </div>
+    <!-- Display mode toggle -->
+    <li class="nav-item p-2 mt-1">
+      <button type="button" class="btn btn-link nav-link p-0" id="theme-toggle" aria-label="Toggle theme">
+        <i id="theme-icon" class="fas fa-sun fa-lg text-muted"></i>
+      </button>
+    </li>
     <!-- Auth user -->
     <li class="nav-item mt-1">
       <a class="nav-link" href="auth_conf">

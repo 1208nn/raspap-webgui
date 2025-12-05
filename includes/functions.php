@@ -698,11 +698,30 @@ function getNightmode()
     }
 }	
 
+// Gets theme mode preference
+// @return string 'light', 'dark', or 'system'
+function getThemeMode()
+{
+    if (isset($_COOKIE['theme_mode'])) {
+        return $_COOKIE['theme_mode'];
+    }
+    // Fallback: check legacy theme cookie
+    if (isset($_COOKIE['theme']) && $_COOKIE['theme'] == 'dark.css') {
+        return 'dark';
+    }
+    return 'light';
+}
+
 // Sets data-bs-theme
 // @return string
 function setTheme()
 {
-    if (getNightmode()) {
+    $mode = getThemeMode();
+    if ($mode === 'system') {
+        // For system mode, we won't set data-bs-theme here
+        // JavaScript will handle it based on prefers-color-scheme
+        echo '';
+    } elseif ($mode === 'dark' || getNightmode()) {
         echo 'data-bs-theme="dark"';
     } else {
         echo 'data-bs-theme="light"';

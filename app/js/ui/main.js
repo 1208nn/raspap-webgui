@@ -514,9 +514,9 @@ $(function() {
         var theme = themes[$( "#theme-select" ).val() ];
 
         var hasDarkTheme = theme === 'custom.php';
-        var nightModeChecked = $("#night-mode").prop("checked");
+        var currentMode = getCookie('theme_mode') || 'light';
         
-        if (nightModeChecked && hasDarkTheme) {
+        if ((currentMode === 'dark' || (currentMode === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) && hasDarkTheme) {
             if (theme === "custom.php") {
                 set_theme("dark.css");
             }
@@ -532,27 +532,81 @@ function set_theme(theme) {
     setCookie('theme',theme,90);
 }
 
+// Theme mode toggle functionality
+// Modes: 'light' (sun), 'dark' (moon), 'system' (computer)
 $(function() {
-    var currentTheme = getCookie('theme');
-    // Check if the current theme is a dark theme
-    var isDarkTheme = currentTheme === 'dark.css';
-
-    $('#night-mode').prop('checked', isDarkTheme);
-    $('#night-mode').change(function() {
-        var state = $(this).is(':checked');
-        var currentTheme = getCookie('theme');
-        
-        if (state == true) {
-            if (currentTheme == 'custom.php') {
-                set_theme('dark.css');
-            }
-        } else {
-            if (currentTheme == 'dark.css') {
-                set_theme('custom.php');
-            }
+    var themeMode = getCookie('theme_mode') || 'light';
+    
+    // Initialize theme on page load
+    updateThemeIcon(themeMode);
+    applyTheme(themeMode);
+    
+    // Listen for system preference changes (only applies when in 'system' mode)
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function(e) {
+        var currentMode = getCookie('theme_mode') || 'light';
+        if (currentMode === 'system') {
+            applyTheme('system');
         }
-   });
+    });
+    
+    // Theme toggle button click handler
+    $('#theme-toggle').on('click', function() {
+        var currentMode = getCookie('theme_mode') || 'light';
+        var newMode;
+        
+        // Cycle through modes: light -> dark -> system -> light
+        if (currentMode === 'light') {
+            newMode = 'dark';
+        } else if (currentMode === 'dark') {
+            newMode = 'system';
+        } else {
+            newMode = 'light';
+        }
+        
+        setCookie('theme_mode', newMode, 90);
+        updateThemeIcon(newMode);
+        applyTheme(newMode);
+    });
 });
+
+function updateThemeIcon(mode) {
+    var $icon = $('#theme-icon');
+    $icon.removeClass('fa-sun fa-moon fa-desktop');
+    
+    if (mode === 'light') {
+        $icon.addClass('fa-sun');
+    } else if (mode === 'dark') {
+        $icon.addClass('fa-moon');
+    } else {
+        $icon.addClass('fa-desktop');
+    }
+}
+
+function applyTheme(mode) {
+    var $htmlElement = $('html');
+    var effectiveTheme;
+    
+    if (mode === 'system') {
+        // Check system preference
+        effectiveTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    } else {
+        effectiveTheme = mode;
+    }
+    
+    $htmlElement.attr('data-bs-theme', effectiveTheme);
+    
+    // Also update the CSS theme file
+    var currentCssTheme = getCookie('theme');
+    if (effectiveTheme === 'dark') {
+        if (currentCssTheme === 'custom.php' || !currentCssTheme) {
+            set_theme('dark.css');
+        }
+    } else {
+        if (currentCssTheme === 'dark.css') {
+            set_theme('custom.php');
+        }
+    }
+}
 
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
@@ -626,17 +680,6 @@ function updateActivityLED() {
     .catch(() => { /* ignore fetch errors */ });
 }
 setInterval(updateActivityLED, 100);
-
-$(document).ready(function() {
-    const $htmlElement = $('html');
-    const $modeswitch = $('#night-mode');
-    $modeswitch.on('change', function() {
-        const isChecked = $(this).is(':checked');
-        const newTheme = isChecked ? 'dark' : 'light';
-        $htmlElement.attr('data-bs-theme', newTheme);
-        localStorage.setItem('bsTheme', newTheme);
-    });
-});
 
 $(document)
     .ajaxSend(setCSRFTokenHeader)
