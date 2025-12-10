@@ -698,8 +698,11 @@ function getNightmode()
     }
 }	
 
-// Gets theme mode preference
-// @return string 'light', 'dark', or 'system'
+/**
+ * Gets theme mode preference
+ *
+ * @return string 'light', 'dark', or 'system'
+ */
 function getThemeMode()
 {
     if (isset($_COOKIE['theme_mode'])) {
