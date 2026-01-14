@@ -512,45 +512,59 @@ $(document).on("click", ".js-toggle-password", function(e) {
 $(function() {
     $('#theme-select').change(function() {
         var theme = themes[$( "#theme-select" ).val() ];
-
-        var hasDarkTheme = theme === 'custom.php';
-        var nightModeChecked = $("#night-mode").prop("checked");
+        var currentTheme = getCookie('theme');
         
-        if (nightModeChecked && hasDarkTheme) {
-            if (theme === "custom.php") {
-                set_theme("dark.css");
-            }
+        // If user is currently in dark mode and selects custom theme, stay in dark mode
+        if (currentTheme === 'dark.css' && theme === 'custom.php') {
+            set_theme('dark.css');
         } else {
             set_theme(theme);
         }
    });
 });
 
+function updateThemeIcon(isDarkTheme) {
+    var $icon = $('#night-mode i');
+    if (isDarkTheme) {
+        $icon.removeClass('far fa-moon').addClass('fas fa-sun');
+    } else {
+        $icon.removeClass('fas fa-sun').addClass('far fa-moon');
+    }
+}
+
 function set_theme(theme) {
     $('link[title="main"]').attr('href', 'app/css/' + theme);
-    // persist selected theme in cookie 
+    // Persist selected theme in cookie
     setCookie('theme',theme,90);
+    updateThemeIcon(theme === 'dark.css');
 }
 
 $(function() {
+    // Initialize icon state on page load based on current theme
     var currentTheme = getCookie('theme');
-    // Check if the current theme is a dark theme
-    var isDarkTheme = currentTheme === 'dark.css';
-
-    $('#night-mode').prop('checked', isDarkTheme);
-    $('#night-mode').change(function() {
-        var state = $(this).is(':checked');
+    updateThemeIcon(currentTheme === 'dark.css');
+    
+    $('#night-mode').click(function() {
         var currentTheme = getCookie('theme');
+        var newTheme;
+        var newBsTheme;
         
-        if (state == true) {
-            if (currentTheme == 'custom.php') {
-                set_theme('dark.css');
-            }
+        // Toggle between light and dark theme
+        if (currentTheme === 'dark.css') {
+            // Switch from dark to light
+            newTheme = 'custom.php';
+            newBsTheme = 'light';
         } else {
-            if (currentTheme == 'dark.css') {
-                set_theme('custom.php');
-            }
+            // Switch from light to dark (handles 'custom.php', undefined, or other themes)
+            newTheme = 'dark.css';
+            newBsTheme = 'dark';
         }
+        
+        // Update both theme systems consistently
+        set_theme(newTheme);
+        var $htmlElement = $('html');
+        $htmlElement.attr('data-bs-theme', newBsTheme);
+        localStorage.setItem('bsTheme', newBsTheme);
    });
 });
 
@@ -626,17 +640,6 @@ function updateActivityLED() {
     .catch(() => { /* ignore fetch errors */ });
 }
 setInterval(updateActivityLED, 100);
-
-$(document).ready(function() {
-    const $htmlElement = $('html');
-    const $modeswitch = $('#night-mode');
-    $modeswitch.on('change', function() {
-        const isChecked = $(this).is(':checked');
-        const newTheme = isChecked ? 'dark' : 'light';
-        $htmlElement.attr('data-bs-theme', newTheme);
-        localStorage.setItem('bsTheme', newTheme);
-    });
-});
 
 $(document)
     .ajaxSend(setCSRFTokenHeader)
