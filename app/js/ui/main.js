@@ -534,7 +534,7 @@ function updateThemeIcon(isDarkTheme) {
 
 function set_theme(theme) {
     $('link[title="main"]').attr('href', 'app/css/' + theme);
-    // persist selected theme in cookie 
+    // Persist selected theme in cookie
     setCookie('theme',theme,90);
     updateThemeIcon(theme === 'dark.css');
 }
@@ -562,7 +562,7 @@ $(function() {
         
         // Update both theme systems consistently
         set_theme(newTheme);
-        const $htmlElement = $('html');
+        var $htmlElement = $('html');
         $htmlElement.attr('data-bs-theme', newBsTheme);
         localStorage.setItem('bsTheme', newBsTheme);
    });
