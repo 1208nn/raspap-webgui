@@ -512,38 +512,41 @@ $(document).on("click", ".js-toggle-password", function(e) {
 $(function() {
     $('#theme-select').change(function() {
         var theme = themes[$( "#theme-select" ).val() ];
-
-        var hasDarkTheme = theme === 'custom.php';
         var currentTheme = getCookie('theme');
-        var isDarkMode = currentTheme === 'dark.css';
+        var hasDarkTheme = theme === 'custom.php';
         
-        if (isDarkMode && hasDarkTheme) {
-            if (theme === "custom.php") {
-                set_theme("dark.css");
-            }
+        if (currentTheme === 'dark.css' && hasDarkTheme) {
+            set_theme("dark.css");
         } else {
             set_theme(theme);
         }
    });
 });
 
+function updateThemeIcon(isDarkTheme) {
+    var $icon = $('#night-mode i');
+    if (isDarkTheme) {
+        $icon.removeClass('far fa-moon').addClass('fas fa-sun');
+    } else {
+        $icon.removeClass('fas fa-sun').addClass('far fa-moon');
+    }
+}
+
 function set_theme(theme) {
     $('link[title="main"]').attr('href', 'app/css/' + theme);
     // persist selected theme in cookie 
     setCookie('theme',theme,90);
+    updateThemeIcon(theme === 'dark.css');
 }
 
 $(function() {
     $('#night-mode').click(function() {
         var currentTheme = getCookie('theme');
-        var $icon = $(this).find('i');
         
         if (currentTheme == 'custom.php') {
             set_theme('dark.css');
-            $icon.removeClass('far fa-moon').addClass('fas fa-sun');
         } else if (currentTheme == 'dark.css') {
             set_theme('custom.php');
-            $icon.removeClass('fas fa-sun').addClass('far fa-moon');
         }
    });
 });
