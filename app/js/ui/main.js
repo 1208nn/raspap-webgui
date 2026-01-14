@@ -540,6 +540,10 @@ function set_theme(theme) {
 }
 
 $(function() {
+    // Initialize icon state on page load based on current theme
+    var currentTheme = getCookie('theme');
+    updateThemeIcon(currentTheme === 'dark.css');
+    
     $('#night-mode').click(function() {
         var currentTheme = getCookie('theme');
         
