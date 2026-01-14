@@ -513,10 +513,10 @@ $(function() {
     $('#theme-select').change(function() {
         var theme = themes[$( "#theme-select" ).val() ];
         var currentTheme = getCookie('theme');
-        var hasDarkTheme = theme === 'custom.php';
         
-        if (currentTheme === 'dark.css' && hasDarkTheme) {
-            set_theme("dark.css");
+        // If user is currently in dark mode and selects custom theme, stay in dark mode
+        if (currentTheme === 'dark.css' && theme === 'custom.php') {
+            set_theme('dark.css');
         } else {
             set_theme(theme);
         }
@@ -543,11 +543,19 @@ $(function() {
     $('#night-mode').click(function() {
         var currentTheme = getCookie('theme');
         
-        if (currentTheme == 'custom.php') {
+        // Toggle between light and dark theme
+        if (currentTheme == 'custom.php' || !currentTheme) {
             set_theme('dark.css');
-        } else if (currentTheme == 'dark.css') {
+        } else {
             set_theme('custom.php');
         }
+        
+        // Also update Bootstrap theme attribute
+        const $htmlElement = $('html');
+        const currentBsTheme = $htmlElement.attr('data-bs-theme');
+        const newBsTheme = currentBsTheme === 'dark' ? 'light' : 'dark';
+        $htmlElement.attr('data-bs-theme', newBsTheme);
+        localStorage.setItem('bsTheme', newBsTheme);
    });
 });
 
@@ -623,17 +631,6 @@ function updateActivityLED() {
     .catch(() => { /* ignore fetch errors */ });
 }
 setInterval(updateActivityLED, 100);
-
-$(document).ready(function() {
-    const $htmlElement = $('html');
-    const $modeButton = $('#night-mode');
-    $modeButton.on('click', function() {
-        const currentTheme = $htmlElement.attr('data-bs-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        $htmlElement.attr('data-bs-theme', newTheme);
-        localStorage.setItem('bsTheme', newTheme);
-    });
-});
 
 $(document)
     .ajaxSend(setCSRFTokenHeader)
