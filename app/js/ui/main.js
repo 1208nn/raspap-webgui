@@ -514,9 +514,10 @@ $(function() {
         var theme = themes[$( "#theme-select" ).val() ];
 
         var hasDarkTheme = theme === 'custom.php';
-        var nightModeChecked = $("#night-mode").prop("checked");
+        var currentTheme = getCookie('theme');
+        var isDarkMode = currentTheme === 'dark.css';
         
-        if (nightModeChecked && hasDarkTheme) {
+        if (isDarkMode && hasDarkTheme) {
             if (theme === "custom.php") {
                 set_theme("dark.css");
             }
@@ -533,23 +534,16 @@ function set_theme(theme) {
 }
 
 $(function() {
-    var currentTheme = getCookie('theme');
-    // Check if the current theme is a dark theme
-    var isDarkTheme = currentTheme === 'dark.css';
-
-    $('#night-mode').prop('checked', isDarkTheme);
-    $('#night-mode').change(function() {
-        var state = $(this).is(':checked');
+    $('#night-mode').click(function() {
         var currentTheme = getCookie('theme');
+        var $icon = $(this).find('i');
         
-        if (state == true) {
-            if (currentTheme == 'custom.php') {
-                set_theme('dark.css');
-            }
-        } else {
-            if (currentTheme == 'dark.css') {
-                set_theme('custom.php');
-            }
+        if (currentTheme == 'custom.php') {
+            set_theme('dark.css');
+            $icon.removeClass('far fa-moon').addClass('fas fa-sun');
+        } else if (currentTheme == 'dark.css') {
+            set_theme('custom.php');
+            $icon.removeClass('fas fa-sun').addClass('far fa-moon');
         }
    });
 });
@@ -629,10 +623,10 @@ setInterval(updateActivityLED, 100);
 
 $(document).ready(function() {
     const $htmlElement = $('html');
-    const $modeswitch = $('#night-mode');
-    $modeswitch.on('change', function() {
-        const isChecked = $(this).is(':checked');
-        const newTheme = isChecked ? 'dark' : 'light';
+    const $modeButton = $('#night-mode');
+    $modeButton.on('click', function() {
+        const currentTheme = $htmlElement.attr('data-bs-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         $htmlElement.attr('data-bs-theme', newTheme);
         localStorage.setItem('bsTheme', newTheme);
     });
