@@ -544,10 +544,12 @@ $(function() {
         var currentTheme = getCookie('theme');
         
         // Toggle between light and dark theme
-        if (currentTheme == 'custom.php' || !currentTheme) {
-            set_theme('dark.css');
-        } else {
+        if (currentTheme === 'dark.css') {
+            // Switch from dark to light
             set_theme('custom.php');
+        } else {
+            // Switch from light to dark (handles 'custom.php', undefined, or other themes)
+            set_theme('dark.css');
         }
         
         // Also update Bootstrap theme attribute
