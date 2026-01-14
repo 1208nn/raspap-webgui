@@ -546,20 +546,23 @@ $(function() {
     
     $('#night-mode').click(function() {
         var currentTheme = getCookie('theme');
+        var newTheme;
+        var newBsTheme;
         
         // Toggle between light and dark theme
         if (currentTheme === 'dark.css') {
             // Switch from dark to light
-            set_theme('custom.php');
+            newTheme = 'custom.php';
+            newBsTheme = 'light';
         } else {
             // Switch from light to dark (handles 'custom.php', undefined, or other themes)
-            set_theme('dark.css');
+            newTheme = 'dark.css';
+            newBsTheme = 'dark';
         }
         
-        // Also update Bootstrap theme attribute
+        // Update both theme systems consistently
+        set_theme(newTheme);
         const $htmlElement = $('html');
-        const currentBsTheme = $htmlElement.attr('data-bs-theme');
-        const newBsTheme = currentBsTheme === 'dark' ? 'light' : 'dark';
         $htmlElement.attr('data-bs-theme', newBsTheme);
         localStorage.setItem('bsTheme', newBsTheme);
    });
