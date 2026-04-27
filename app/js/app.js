@@ -34,9 +34,9 @@ import { initAbout_ajax } from "./ajax/about.js";
 // Register the PWA service worker
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js').catch((err) => {
-            console.warn('Service worker registration failed:', err);
-        });
+        navigator.serviceWorker.register('/sw.js')
+            .then(() => console.info('RaspAP service worker registered'))
+            .catch((err) => console.warn('Service worker registration failed:', err));
     });
 }
 

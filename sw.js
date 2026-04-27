@@ -70,7 +70,10 @@ self.addEventListener('fetch', (event) => {
         url.pathname.startsWith('/api/')
     ) {
         event.respondWith(
-            fetch(request).catch(() => caches.match('/'))
+            fetch(request).catch(() => {
+                // Fall back to the cached root only when available (e.g. offline)
+                return caches.match('/').then((cached) => cached || Response.error());
+            })
         );
         return;
     }
@@ -84,6 +87,8 @@ self.addEventListener('fetch', (event) => {
             return fetch(request).then((response) => {
                 // Cache valid responses for future use
                 if (response && response.status === 200 && response.type === 'basic') {
+                    // Only cache same-origin ('basic') responses; opaque/CORS responses
+                    // are excluded because their status cannot be verified.
                     const clone = response.clone();
                     caches.open(CACHE_NAME).then((cache) => cache.put(request, clone));
                 }
