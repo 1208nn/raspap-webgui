@@ -1,0 +1,566 @@
+# Instincts generated from https://github.com/1208nn/raspap-webgui
+# Generated: 2026-03-31T02:36:57.956Z
+# Version: 2.0
+# NOTE: This file supplements (does not replace) any existing curated instincts.
+# High-confidence manually curated instincts should be preserved alongside these.
+
+---
+id: raspap-webgui-commit-length
+trigger: "when writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: https://github.com/1208nn/raspap-webgui
+---
+
+# Raspap Webgui Commit Length
+
+## Action
+
+Keep commit messages concise (~42 characters)
+
+## Evidence
+
+- Average commit message length: 42 chars
+- Based on 200 commits
+
+---
+id: raspap-webgui-naming-files
+trigger: "when creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/1208nn/raspap-webgui
+---
+
+# Raspap Webgui Naming Files
+
+## Action
+
+Use camelCase naming convention
+
+## Evidence
+
+- Analyzed file naming patterns in repository
+- Dominant pattern: camelCase
+
+---
+id: raspap-webgui-import-relative
+trigger: "when importing modules"
+confidence: 0.75
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/1208nn/raspap-webgui
+---
+
+# Raspap Webgui Import Relative
+
+## Action
+
+Use relative imports for project files
+
+## Evidence
+
+- Import analysis shows relative import pattern
+- Example: import { x } from '../lib/x'
+
+---
+id: raspap-webgui-export-style
+trigger: "when exporting from a module"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/1208nn/raspap-webgui
+---
+
+# Raspap Webgui Export Style
+
+## Action
+
+Prefer named exports
+
+## Evidence
+
+- Export pattern analysis
+- Dominant style: named
+
+---
+id: raspap-webgui-test-separate
+trigger: "when writing tests"
+confidence: 0.8
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/1208nn/raspap-webgui
+---
+
+# Raspap Webgui Test Separate
+
+## Action
+
+Place tests in the tests/ or __tests__/ directory, mirroring src structure
+
+## Evidence
+
+- Separate test directory pattern detected
+- Tests live in dedicated test folders
+
+---
+id: raspap-webgui-workflow-feature-development
+trigger: "when implementing a new feature"
+confidence: 0.9
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/1208nn/raspap-webgui
+---
+
+# Raspap Webgui Workflow Feature Development
+
+## Action
+
+Follow the feature-development workflow:
+1. Add feature implementation
+2. Add tests for feature
+3. Update documentation
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~8x per month
+- Files: **/api/**
+
+---
+id: raspap-webgui-workflow-feature-development-with-translation
+trigger: "when doing feature development with translation"
+confidence: 0.55
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/1208nn/raspap-webgui
+---
+
+# Raspap Webgui Workflow Feature Development With Translation
+
+## Action
+
+Follow the feature-development-with-translation workflow:
+1. Add or update backend PHP logic (e.g., ajax/networking/*.php)
+2. Update frontend JS to support new feature (e.g., app/js/ajax/main.js)
+3. Modify or add template files for UI changes (e.g., templates/hostapd/basic.php)
+4. Update translation source and compiled files (locale/en_US/LC_MESSAGES/messages.po and messages.mo)
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~1x per month
+- Files: ajax/networking/*.php, app/js/ajax/main.js, templates/hostapd/basic.php
+
+---
+id: raspap-webgui-workflow-release-version-bump
+trigger: "when doing release version bump"
+confidence: 0.55
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/1208nn/raspap-webgui
+---
+
+# Raspap Webgui Workflow Release Version Bump
+
+## Action
+
+Follow the release-version-bump workflow:
+1. Update version number in README.md
+2. Update version in includes/defaults.php
+3. Update index.php (possibly for version display or logic)
+4. Merge pull request for release
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~1x per month
+- Files: README.md, includes/defaults.php, index.php
+
+---
+id: raspap-webgui-workflow-ui-template-mass-update
+trigger: "when doing ui template mass update"
+confidence: 0.6
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/1208nn/raspap-webgui
+---
+
+# Raspap Webgui Workflow Ui Template Mass Update
+
+## Action
+
+Follow the ui-template-mass-update workflow:
+1. Edit many files under templates/ (sometimes also app/css/all.css or app/js/ui/main.js)
+2. Make consistent changes such as adding/removing classes, updating layout, or fixing UI bugs
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~2x per month
+- Files: templates/*.php, app/css/all.css, app/js/ui/main.js
+
+---
+id: raspap-webgui-workflow-service-control-refactor
+trigger: "when doing service control refactor"
+confidence: 0.55
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/1208nn/raspap-webgui
+---
+
+# Raspap Webgui Workflow Service Control Refactor
+
+## Action
+
+Follow the service-control-refactor workflow:
+1. Move or update service control code in includes/*.php (e.g., includes/hostapd.php, includes/openvpn.php)
+2. Update corresponding templates (e.g., templates/hostapd.php, templates/openvpn.php, templates/dhcp.php, etc.)
+3. Sometimes update related JS or add new UI elements
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~1x per month
+- Files: includes/hostapd.php, includes/openvpn.php, includes/wireguard.php
+
+---
+id: raspap-webgui-workflow-dependency-update-automation
+trigger: "when doing dependency update automation"
+confidence: 0.55
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/1208nn/raspap-webgui
+---
+
+# Raspap Webgui Workflow Dependency Update Automation
+
+## Action
+
+Follow the dependency-update-automation workflow:
+1. Update dependency version in lockfile (e.g., yarn.lock)
+2. Merge pull request for the dependency update
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~1x per month
+- Files: yarn.lock
+
+---
+id: raspap-webgui-instinct-filename-camelCase
+trigger: "When creating or renaming a JavaScript file"
+confidence: 0.85
+domain: code-style
+source: repo-analysis
+source_repo: 1208nn/raspap-webgui
+---
+
+# Raspap Webgui Instinct Filename CamelCase
+
+## Action
+
+Use camelCase for file names
+
+## Evidence
+
+- Pattern in app/js/ajax/main.js
+- Pattern in app/js/ui/main.js
+
+---
+id: raspap-webgui-instinct-function-camelCase
+trigger: "When defining a JavaScript function"
+confidence: 0.85
+domain: code-style
+source: repo-analysis
+source_repo: 1208nn/raspap-webgui
+---
+
+# Raspap Webgui Instinct Function CamelCase
+
+## Action
+
+Name the function using camelCase
+
+## Evidence
+
+- Pattern in app/js/ajax/main.js
+- Pattern in app/js/ui/main.js
+
+---
+id: raspap-webgui-instinct-class-PascalCase
+trigger: "When defining a JavaScript class"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: 1208nn/raspap-webgui
+---
+
+# Raspap Webgui Instinct Class PascalCase
+
+## Action
+
+Name the class using PascalCase
+
+## Evidence
+
+- Pattern in WiFiManager class (commit: 'Refactor: encapsulate WiFi client operations in WiFiManager class')
+
+---
+id: raspap-webgui-instinct-constant-SCREAMING_SNAKE_CASE
+trigger: "When defining a constant in JavaScript"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: 1208nn/raspap-webgui
+---
+
+# Raspap Webgui Instinct Constant SCREAMING_SNAKE_CASE
+
+## Action
+
+Use SCREAMING_SNAKE_CASE for constant names
+
+## Evidence
+
+- Pattern in app/js/ajax/main.js
+
+---
+id: raspap-webgui-instinct-import-relative
+trigger: "When importing modules in JavaScript"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: 1208nn/raspap-webgui
+---
+
+# Raspap Webgui Instinct Import Relative
+
+## Action
+
+Use relative import paths
+
+## Evidence
+
+- Pattern in app/js/ajax/main.js
+- Pattern in app/js/ui/main.js
+
+---
+id: raspap-webgui-instinct-export-named
+trigger: "When exporting modules in JavaScript"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: 1208nn/raspap-webgui
+---
+
+# Raspap Webgui Instinct Export Named
+
+## Action
+
+Use named exports
+
+## Evidence
+
+- Pattern in app/js/ajax/main.js
+- Pattern in app/js/ui/main.js
+
+---
+id: raspap-webgui-instinct-error-try-catch
+trigger: "When handling errors in JavaScript"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: 1208nn/raspap-webgui
+---
+
+# Raspap Webgui Instinct Error Try Catch
+
+## Action
+
+Use try-catch blocks for error handling
+
+## Evidence
+
+- Pattern in app/js/ajax/main.js
+- Pattern in app/js/ui/main.js
+
+---
+id: raspap-webgui-instinct-git-commit-no-prefix
+trigger: "When writing a commit message"
+confidence: 0.9
+domain: git
+source: repo-analysis
+source_repo: 1208nn/raspap-webgui
+---
+
+# Raspap Webgui Instinct Git Commit No Prefix
+
+## Action
+
+Write a concise, freeform commit message without a strict prefix
+
+## Evidence
+
+- Seen in commits: 'Imager: generate updated os-subitem.json', 'Minor: comments', 'Fix: re-apply locale settings template context'
+
+---
+id: raspap-webgui-instinct-git-commit-short
+trigger: "When writing a commit message"
+confidence: 0.8
+domain: git
+source: repo-analysis
+source_repo: 1208nn/raspap-webgui
+---
+
+# Raspap Webgui Instinct Git Commit Short
+
+## Action
+
+Keep the commit message short (around 40 characters)
+
+## Evidence
+
+- Average commit length is 42 characters
+
+---
+id: raspap-webgui-instinct-feature-dev-with-translation
+trigger: "When adding a new feature that requires backend, frontend, UI, and localization changes"
+confidence: 0.9
+domain: workflow
+source: repo-analysis
+source_repo: 1208nn/raspap-webgui
+---
+
+# Raspap Webgui Instinct Feature Dev With Translation
+
+## Action
+
+Update backend PHP (ajax/networking/*.php), frontend JS (app/js/ajax/main.js), templates (templates/hostapd/basic.php), and translation files (locale/en_US/LC_MESSAGES/messages.po, messages.mo)
+
+## Evidence
+
+- Workflow: feature-development-with-translation
+- Commits and files: see workflow example
+
+---
+id: raspap-webgui-instinct-release-version-bump
+trigger: "When preparing a new release"
+confidence: 0.95
+domain: workflow
+source: repo-analysis
+source_repo: 1208nn/raspap-webgui
+---
+
+# Raspap Webgui Instinct Release Version Bump
+
+## Action
+
+Update version in README.md, includes/defaults.php, and index.php, then merge pull request
+
+## Evidence
+
+- Workflow: release-version-bump
+- Commits: 'Release: Set version 3.5.1', 'Update version number in README.md'
+
+---
+id: raspap-webgui-instinct-ui-template-mass-update
+trigger: "When making UI changes that affect many templates"
+confidence: 0.9
+domain: workflow
+source: repo-analysis
+source_repo: 1208nn/raspap-webgui
+---
+
+# Raspap Webgui Instinct Ui Template Mass Update
+
+## Action
+
+Edit multiple files under templates/, and optionally app/css/all.css or app/js/ui/main.js, for consistent UI changes
+
+## Evidence
+
+- Workflow: ui-template-mass-update
+- Commits: 'fix stray closing element and add classes'
+- Files: templates/*.php
+
+---
+id: raspap-webgui-instinct-service-control-refactor
+trigger: "When reorganizing or improving service control logic/UI"
+confidence: 0.85
+domain: workflow
+source: repo-analysis
+source_repo: 1208nn/raspap-webgui
+---
+
+# Raspap Webgui Instinct Service Control Refactor
+
+## Action
+
+Update service control code in includes/*.php and corresponding templates, sometimes updating related JS or UI elements
+
+## Evidence
+
+- Workflow: service-control-refactor
+- Commits: 'Refactor: encapsulate WiFi client operations in WiFiManager class'
+
+---
+id: raspap-webgui-instinct-dependency-update-automation
+trigger: "When a dependency update is available (usually automated)"
+confidence: 0.95
+domain: workflow
+source: repo-analysis
+source_repo: 1208nn/raspap-webgui
+---
+
+# Raspap Webgui Instinct Dependency Update Automation
+
+## Action
+
+Update dependency version in yarn.lock and merge pull request
+
+## Evidence
+
+- Workflow: dependency-update-automation
+- Commits: 'Update dependency version in lockfile (e.g., yarn.lock)'
+
+---
+id: raspap-webgui-instinct-testing-location-separate
+trigger: "When adding or updating tests"
+confidence: 0.7
+domain: testing
+source: repo-analysis
+source_repo: 1208nn/raspap-webgui
+---
+
+# Raspap Webgui Instinct Testing Location Separate
+
+## Action
+
+Place test files in a separate location from source files
+
+## Evidence
+
+- Architecture: testLocation is 'separate'
+
+---
+id: raspap-webgui-instinct-feature-dev-add-tests
+trigger: "When implementing a new feature"
+confidence: 0.8
+domain: testing
+source: repo-analysis
+source_repo: 1208nn/raspap-webgui
+---
+
+# Raspap Webgui Instinct Feature Dev Add Tests
+
+## Action
+
+Add tests for the new feature after implementation
+
+## Evidence
+
+- Workflow: feature-development
+- Commit sequence includes 'Add tests for feature'
+
